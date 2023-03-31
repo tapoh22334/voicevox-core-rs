@@ -1,6 +1,32 @@
-## VOICEVOX CORE Rust binding
+## VOICEVOX CORE Rust Bindings
 
-VOICEVOX COREのRust向けFFIラッパ
+VOICEVOX COREのRust向けFFIラッパーです。
+
+## サンプルの実行方法
+
+### 必要なもの
+
+以下の方法でVOICEVOX COREをダウンロードしておいてください。
+https://github.com/VOICEVOX/voicevox_core#%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89
+
+### ビルド方法
+
+以下のコマンドでサンプルコードをビルドします。
+```
+cargo build --example simple-tts
+```
+
+ビルドに必要なファイルがあるディレクトリに実行ファイルを移動します。
+```
+mv target/debug/examples/simple-tts voicevox_core
+```
+
+### 実行
+
+以下のコマンドで実行します。voicevox_coreディレクトリ内にaudio.wavが生成されます。
+```
+(cd voicevox_core && simple-tts)
+```
 
 
 ## 対応状況
