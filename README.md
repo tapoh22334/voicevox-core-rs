@@ -25,7 +25,7 @@ mv target/debug/examples/simple-tts voicevox_core
 
 以下のコマンドで実行します。voicevox_coreディレクトリ内にaudio.wavが生成されます。
 ```
-(cd voicevox_core && simple-tts)
+(export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH && cd voicevox_core && ./simple-tts)
 ```
 
 
