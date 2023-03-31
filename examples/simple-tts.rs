@@ -1,14 +1,11 @@
-use vvc;
+use voicevox_core_rs::*;
 use std::io::Write;
 
 fn main() -> std::io::Result<()> {
-    println!("VOICEVOX CORE version: {}", vvc::VoicevoxCore::get_version());
+    println!("VOICEVOX CORE version: {}", VoicevoxCore::get_version());
 
-    //let mut opt = vvc::VoicevoxCore::make_default_initialize_options();
     let dir = std::ffi::CString::new("open_jtalk_dic_utf_8-1.11").unwrap();
-
-    //let vvc = match vvc::VoicevoxCore::new(opt) {
-    let vvc = match vvc::VoicevoxCore::new_from_options(vvc::AccelerationMode::Auto,
+    let vvc = match VoicevoxCore::new_from_options(AccelerationMode::Auto,
                                                         0,
                                                         true,
                                                         dir.as_c_str()) {
