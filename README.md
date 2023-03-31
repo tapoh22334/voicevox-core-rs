@@ -31,6 +31,9 @@ mv target/debug/examples/simple-tts voicevox_core
 
 ## 対応状況
 
+以下の関数は、高レベルなＡＰＩとして利用可能です。
+また、すべての関数はapiモジュール内でunsafeな関数として参照できます。
+
  - [x] voicevox_make_default_initialize_options
  - [x] voicevox_initialize
  - [x] voicevox_get_version
