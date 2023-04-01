@@ -431,53 +431,6 @@
     }
 
     <span class="doccomment">///
-    /// Loads a model for the specified speaker ID.
-    ///
-    /// # Arguments
-    ///
-    /// * `speaker_id` - The ID of the speaker to load the model for.
-    ///
-    /// # Returns
-    ///
-    /// If the model was loaded successfully, returns `Ok(())`.
-    /// If an error occurred, returns a `ResultCode` enum value representing the error.
-    ///
-    </span><span class="kw">pub fn </span>load_model(speaker_id: u32) -&gt; <span class="prelude-ty">Result</span>&lt;(), ResultCode&gt; {
-        <span class="kw">let </span>result_code = <span class="kw">unsafe </span>{ voicevox_load_model(speaker_id) };
-        <span class="kw">if </span>result_code == ResultCode::Ok <span class="kw">as </span>i32 {
-            <span class="prelude-val">Ok</span>(())
-        } <span class="kw">else </span>{
-            <span class="prelude-val">Err</span>( <span class="kw">unsafe </span>{ std::mem::transmute(result_code) } )
-        }
-    }
-
-    <span class="doccomment">///
-    /// Returns a boolean value indicating whether the current process is running in GPU mode.
-    ///
-    /// # Returns
-    ///
-    /// Returns `true` if the current process is running in GPU mode, and `false` otherwise.
-    ///
-    </span><span class="kw">pub fn </span>is_gpu_mode() -&gt; bool {
-        <span class="kw">unsafe </span>{ voicevox_is_gpu_mode() }
-    }
-
-    <span class="doccomment">///
-    /// Returns a boolean value indicating whether a voice model with the specified speaker ID has been loaded.
-    ///
-    /// # Arguments
-    ///
-    /// * `speaker_id` - The ID of the speaker to check for.
-    ///
-    /// # Returns
-    ///
-    /// Returns `true` if a voice model with the specified speaker ID has been loaded, and `false` otherwise.
-    ///
-    </span><span class="kw">pub fn </span>is_model_loaded(speaker_id: u32) -&gt; bool {
-        <span class="kw">unsafe </span>{ voicevox_is_model_loaded(speaker_id) }
-    }
-
-    <span class="doccomment">///
     /// Returns the metadata of all the available voice models in JSON format.
     ///
     /// # Returns
@@ -497,6 +450,53 @@
     ///
     </span><span class="kw">pub fn </span>get_supported_devices_json() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
         <span class="kw">unsafe </span>{ CStr::from_ptr(voicevox_get_supported_devices_json()).to_str().unwrap() }
+    }
+
+    <span class="doccomment">///
+    /// Loads a model for the specified speaker ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `speaker_id` - The ID of the speaker to load the model for.
+    ///
+    /// # Returns
+    ///
+    /// If the model was loaded successfully, returns `Ok(())`.
+    /// If an error occurred, returns a `ResultCode` enum value representing the error.
+    ///
+    </span><span class="kw">pub fn </span>load_model(<span class="kw-2">&amp;</span><span class="self">self</span>, speaker_id: u32) -&gt; <span class="prelude-ty">Result</span>&lt;(), ResultCode&gt; {
+        <span class="kw">let </span>result_code = <span class="kw">unsafe </span>{ voicevox_load_model(speaker_id) };
+        <span class="kw">if </span>result_code == ResultCode::Ok <span class="kw">as </span>i32 {
+            <span class="prelude-val">Ok</span>(())
+        } <span class="kw">else </span>{
+            <span class="prelude-val">Err</span>( <span class="kw">unsafe </span>{ std::mem::transmute(result_code) } )
+        }
+    }
+
+    <span class="doccomment">///
+    /// Returns a boolean value indicating whether the current process is running in GPU mode.
+    ///
+    /// # Returns
+    ///
+    /// Returns `true` if the current process is running in GPU mode, and `false` otherwise.
+    ///
+    </span><span class="kw">pub fn </span>is_gpu_mode(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{ voicevox_is_gpu_mode() }
+    }
+
+    <span class="doccomment">///
+    /// Returns a boolean value indicating whether a voice model with the specified speaker ID has been loaded.
+    ///
+    /// # Arguments
+    ///
+    /// * `speaker_id` - The ID of the speaker to check for.
+    ///
+    /// # Returns
+    ///
+    /// Returns `true` if a voice model with the specified speaker ID has been loaded, and `false` otherwise.
+    ///
+    </span><span class="kw">pub fn </span>is_model_loaded(<span class="kw-2">&amp;</span><span class="self">self</span>, speaker_id: u32) -&gt; bool {
+        <span class="kw">unsafe </span>{ voicevox_is_model_loaded(speaker_id) }
     }
 
     <span class="doccomment">/// This function generates a WAV file with the result of text-to-speech synthesis using Voicevox Core.

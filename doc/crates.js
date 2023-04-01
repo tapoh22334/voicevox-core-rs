@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["voicevox_core_rs","vvc"];
+window.ALL_CRATES = ["voicevox_core_rs"];
