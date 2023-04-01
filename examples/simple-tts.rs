@@ -10,7 +10,7 @@ fn main() -> std::io::Result<()> {
                                                         true,
                                                         dir.as_c_str()) {
         Ok(vvc) => vvc,
-        Err(e) => panic!("failed to initialize voicevox {}", e),
+        Err(e) => panic!("failed to initialize voicevox {:?}", e),
     };
 
     {
@@ -19,7 +19,7 @@ fn main() -> std::io::Result<()> {
 
         let wav = match vvc.tts_simple(text, speaker) {
             Ok(wav) => wav,
-            Err(e) => panic!("failed to generate wav {}", e),
+            Err(e) => panic!("failed to generate wav {:?}", e),
         };
 
         let mut file = std::fs::File::create("audio.wav").unwrap();

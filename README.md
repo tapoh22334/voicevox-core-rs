@@ -35,14 +35,14 @@ mv target/debug/examples/simple-tts voicevox_core
 また、すべての関数はapiモジュール内でunsafeな関数として参照できます。
 
  - [x] voicevox_make_default_initialize_options
- - [x] voicevox_initialize
+ - [x] ~~voicevox_initialize~~
  - [x] voicevox_get_version
- - [ ] voicevox_load_model
- - [ ] voicevox_is_gpu_mode
- - [ ] voicevox_is_model_loaded
- - [ ] voicevox_finalize
- - [ ] voicevox_get_metas_json
- - [ ] voicevox_get_supported_devices_json
+ - [x] voicevox_load_model
+ - [x] voicevox_is_gpu_mode
+ - [x] voicevox_is_model_loaded
+ - [x] ~~ voicevox_finalize ~~
+ - [x] voicevox_get_metas_json
+ - [x] voicevox_get_supported_devices_json
  - [ ] voicevox_predict_duration
  - [ ] voicevox_predict_duration_data_free
  - [ ] voicevox_predict_intonation
@@ -53,8 +53,8 @@ mv target/debug/examples/simple-tts voicevox_core
  - [ ] voicevox_audio_query
  - [ ] voicevox_make_default_synthesis_options
  - [ ] voicevox_synthesis
- - [ ] voicevox_make_default_tts_options
+ - [x] voicevox_make_default_tts_options
  - [x] voicevox_tts
  - [ ] voicevox_audio_query_json_free
- - [ ] voicevox_wav_free
- - [ ] voicevox_error_result_to_message
+ - [x] ~~voicevox_wav_free~~
+ - [x] voicevox_error_result_to_message
