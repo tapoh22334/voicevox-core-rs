@@ -32,7 +32,7 @@ mv target/debug/examples/simple-tts voicevox_core
 ## 対応状況
 
 以下の関数は、高レベルなＡＰＩとして利用可能です。
-初高レベルＡＰＩにおいては、期化関数やfree関数はRAIIにより実行されるため実装されません。
+高レベルＡＰＩにおいては、初期化関数やfree関数はRAIIにより実行されるため実装されません。
 また、すべての関数はapiモジュール内でunsafeな関数として参照できます。
 
  - [x] voicevox_make_default_initialize_options
