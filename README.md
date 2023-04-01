@@ -33,6 +33,7 @@ mv target/debug/examples/simple-tts voicevox_core
 
 以下の関数は、高レベルなＡＰＩとして利用可能です。
 また、すべての関数はapiモジュール内でunsafeな関数として参照できます。
+初期化関数や、free関数はRAIIにより実行されるため実装されません。
 
  - [x] voicevox_make_default_initialize_options
  - [x] ~~voicevox_initialize~~
@@ -40,7 +41,7 @@ mv target/debug/examples/simple-tts voicevox_core
  - [x] voicevox_load_model
  - [x] voicevox_is_gpu_mode
  - [x] voicevox_is_model_loaded
- - [x] ~~ voicevox_finalize ~~
+ - [x] ~~voicevox_finalize~~
  - [x] voicevox_get_metas_json
  - [x] voicevox_get_supported_devices_json
  - [ ] voicevox_predict_duration
