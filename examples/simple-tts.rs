@@ -1,4 +1,4 @@
-use voicevox_core_rs::*;
+use voicevox_core_rs::api::*;
 use std::io::Write;
 
 fn main() -> std::io::Result<()> {
