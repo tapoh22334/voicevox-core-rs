@@ -23,7 +23,7 @@ fn main() -> std::io::Result<()> {
         };
 
         let mut file = std::fs::File::create("audio.wav").unwrap();
-        file.write_all(&*wav)?;
+        file.write_all(&wav.as_slice())?;
     }
 
     Ok(())
