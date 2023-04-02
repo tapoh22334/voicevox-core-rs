@@ -2,7 +2,8 @@ pub mod api;
 
 pub use self::api::{
     VoicevoxCore,
-    Wav,
+    CPointerWrap,
+    CStrWrap,
     AccelerationMode,
     InitializeOptions,
     AudioQueryOptions,
