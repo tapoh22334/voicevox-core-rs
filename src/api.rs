@@ -411,7 +411,7 @@ impl VoicevoxCore {
     ///
     /// * `CPointerWrap<u8>` containing the synthesized audio in WAV format if synthesis succeeds.
     /// * An error code otherwise.
-    pub fn voicevox_synthesize(
+    pub fn synthesize(
         audio_query: &str,
         speaker_id: u32,
         options: SynthesisOptions,

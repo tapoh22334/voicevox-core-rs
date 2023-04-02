@@ -1,10 +1,10 @@
 [package]
-name = "voicevox-core-rs"
+name = "vvcore"
 version = "0.0.1"
+edition = "2021"
 authors = ["tapoh <iwase22334@gmail.com>"]
-
 license = "MIT"
-description = "The interactive tool for AWS CLI written in Rust"
+description = "FFI bindings for VOICEVOX CORE"
 repository = "https://github.com/iwase22334/voicevox-core-rs"
 readme = "README.md"
 keywords = ["voicevox", "core"]

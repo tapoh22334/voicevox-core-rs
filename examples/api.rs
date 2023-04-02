@@ -1,4 +1,4 @@
-use voicevox_core_rs::*;
+use vvcore::*;
 
 fn main() {
     let version = VoicevoxCore::get_version();
