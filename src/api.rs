@@ -419,7 +419,7 @@ impl VoicevoxCore {
     ///
     /// * `Vec<u8>` containing the synthesized audio in WAV format if synthesis succeeds.
     /// * `ResultCode` otherwise.
-    pub fn voicevox_synthesize(audio_query: &str, speaker_id: u32, options: VoicevoxSynthesisOptions) -> Result<Wav, ResultCode> {
+    pub fn voicevox_synthesize(audio_query: &str, speaker_id: u32, options: SynthesisOptions) -> Result<Wav, ResultCode> {
         let audio_query_c_str = std::ffi::CString::new(audio_query).unwrap();
         let mut output_wav_ptr: *mut u8 = std::ptr::null_mut();
         let mut output_wav_length: usize = 0;
@@ -456,7 +456,7 @@ impl VoicevoxCore {
     /// * audio query formatted in json format if the synthesis succeeds.
     /// * An error code otherwise.
     ///
-    pub unsafe fn audio_query(text: &str, speaker_id: u32, options: VoicevoxAudioQueryOptions) -> Result<CStrWrap, ResultCode> {
+    pub unsafe fn audio_query(text: &str, speaker_id: u32, options: AudioQueryOptions) -> Result<CStrWrap, ResultCode> {
         let c_str = std::ffi::CString::new(text).unwrap();
         let mut output_ptr: *mut std::os::raw::c_char = std::ptr::null_mut();
         let result_code = voicevox_audio_query(c_str.as_ptr(),
