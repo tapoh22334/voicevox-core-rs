@@ -147,9 +147,7 @@ impl Drop for VoicevoxCore {
 
 impl VoicevoxCore {
     pub fn make_default_initialize_options() -> InitializeOptions {
-        let opt = unsafe { voicevox_make_default_initialize_options() };
-
-        opt
+        unsafe { voicevox_make_default_initialize_options() }
     }
 
     pub fn make_default_tts_options() -> TtsOptions {
@@ -302,6 +300,7 @@ impl VoicevoxCore {
     /// On success, returns `Ok` with a `CPointerWrap<f32>` containing the predicted intonation data.
     ///
     /// On failure, returns `Err` with a `ResultCode` indicating the reason of failure.
+    #[allow(clippy::too_many_arguments)]
     pub fn predict_intonation(
         &self,
         vowel_phoneme_vector: &[i64],
