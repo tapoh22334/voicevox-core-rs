@@ -24,9 +24,11 @@ fn main() {
         let result = vvc.load_model(speaker_id);
         match result {
             Ok(_) => panic!("unexpected"),
-            Err(error) => println!("Error loading model for speaker {}: {}",
-                                   speaker_id,
-                                   VoicevoxCore::error_result_to_message(error)),
+            Err(error) => println!(
+                "Error loading model for speaker {}: {}",
+                speaker_id,
+                VoicevoxCore::error_result_to_message(error)
+            ),
         }
 
         let speaker_id = 0;
@@ -42,5 +44,4 @@ fn main() {
         let is_gpu = vvc.is_gpu_mode();
         println!("Is running in GPU mode: {}", is_gpu);
     }
-
 }

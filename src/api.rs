@@ -21,7 +21,11 @@ pub struct CPointerWrap<T> {
 
 impl<T> CPointerWrap<T> {
     pub fn new(bytes: *mut T, length: usize, free_fn: fn(*mut T)) -> Self {
-        Self { bytes, length, free_fn }
+        Self {
+            bytes,
+            length,
+            free_fn,
+        }
     }
 
     pub fn as_slice(&self) -> &[T] {
@@ -110,27 +114,25 @@ pub struct VoicevoxCore;
 
 impl VoicevoxCore {
     pub fn new(opt: InitializeOptions) -> Result<Self, ResultCode> {
-        let result = unsafe {
-            voicevox_initialize(opt)
-        };
+        let result = unsafe { voicevox_initialize(opt) };
 
         match result {
             0 => Ok(Self {}),
-            e => Err( unsafe { std::mem::transmute(e) } ),
+            e => Err(unsafe { std::mem::transmute(e) }),
         }
     }
 
-    pub fn new_from_options(acceleration_mode: AccelerationMode,
-                cpu_num_threads: u16,
-                load_all_models: bool,
-                open_jtalk_dict_dir: &std::ffi::CStr
-               ) -> Result<Self, ResultCode> {
-
+    pub fn new_from_options(
+        acceleration_mode: AccelerationMode,
+        cpu_num_threads: u16,
+        load_all_models: bool,
+        open_jtalk_dict_dir: &std::ffi::CStr,
+    ) -> Result<Self, ResultCode> {
         let opt = InitializeOptions {
             acceleration_mode: acceleration_mode as i32,
             cpu_num_threads,
             load_all_models,
-            open_jtalk_dict_dir: open_jtalk_dict_dir.as_ptr()
+            open_jtalk_dict_dir: open_jtalk_dict_dir.as_ptr(),
         };
 
         Self::new(opt)
@@ -139,48 +141,33 @@ impl VoicevoxCore {
 
 impl Drop for VoicevoxCore {
     fn drop(&mut self) {
-        unsafe {
-            voicevox_finalize()
-        };
-
+        unsafe { voicevox_finalize() };
     }
 }
 
 impl VoicevoxCore {
     pub fn make_default_initialize_options() -> InitializeOptions {
-        let opt = unsafe {
-            voicevox_make_default_initialize_options()
-        };
+        let opt = unsafe { voicevox_make_default_initialize_options() };
 
         opt
     }
 
     pub fn make_default_tts_options() -> TtsOptions {
-        unsafe {
-            voicevox_make_default_tts_options()
-        }
+        unsafe { voicevox_make_default_tts_options() }
     }
 
     pub fn make_default_audio_query_options() -> AudioQueryOptions {
-        unsafe {
-            voicevox_make_default_audio_query_options()
-        }
+        unsafe { voicevox_make_default_audio_query_options() }
     }
 
     pub fn make_default_synthesis_options() -> SynthesisOptions {
-        unsafe {
-            voicevox_make_default_synthesis_options()
-        }
+        unsafe { voicevox_make_default_synthesis_options() }
     }
 
     pub fn get_version() -> &'static str {
-        let version_ptr = unsafe {
-            voicevox_get_version()
-        };
+        let version_ptr = unsafe { voicevox_get_version() };
 
-        let version_cstr = unsafe {
-            std::ffi::CStr::from_ptr(version_ptr)
-        };
+        let version_cstr = unsafe { std::ffi::CStr::from_ptr(version_ptr) };
 
         version_cstr.to_str().unwrap()
     }
@@ -204,7 +191,11 @@ impl VoicevoxCore {
     /// Returns a string representing the list of devices supported by Voicevox in JSON format.
     ///
     pub fn get_supported_devices_json() -> &'static str {
-        unsafe { CStr::from_ptr(voicevox_get_supported_devices_json()).to_str().unwrap() }
+        unsafe {
+            CStr::from_ptr(voicevox_get_supported_devices_json())
+                .to_str()
+                .unwrap()
+        }
     }
 
     ///
@@ -224,7 +215,7 @@ impl VoicevoxCore {
         if result_code == ResultCode::Ok as i32 {
             Ok(())
         } else {
-            Err( unsafe { std::mem::transmute(result_code) } )
+            Err(unsafe { std::mem::transmute(result_code) })
         }
     }
 
@@ -266,28 +257,28 @@ impl VoicevoxCore {
     /// * [CPointerWrap] if the synthesis succeeds.
     /// * An error code otherwise.
     ///
-    pub fn predict_duration(&self, phoneme_vector: &[i64], speaker_id: u32) -> Result<CPointerWrap<f32>, ResultCode> {
+    pub fn predict_duration(
+        &self,
+        phoneme_vector: &[i64],
+        speaker_id: u32,
+    ) -> Result<CPointerWrap<f32>, ResultCode> {
         let len = phoneme_vector.len();
         let ptr = phoneme_vector.as_ptr() as *mut i64;
         let mut data_length: usize = 0;
         let mut data_ptr: *mut f32 = std::ptr::null_mut();
-        let result_code = unsafe { voicevox_predict_duration(len,
-                                                    ptr,
-                                                    speaker_id,
-                                                    &mut data_length,
-                                                    &mut data_ptr) };
+        let result_code = unsafe {
+            voicevox_predict_duration(len, ptr, speaker_id, &mut data_length, &mut data_ptr)
+        };
 
         match result_code {
             0 => {
-                let ptr_wrap = CPointerWrap::new(
-                    data_ptr,
-                    data_length,
-                    |p| unsafe { voicevox_predict_duration_data_free(p) },
-                    );
+                let ptr_wrap = CPointerWrap::new(data_ptr, data_length, |p| unsafe {
+                    voicevox_predict_duration_data_free(p)
+                });
                 Ok(ptr_wrap)
             }
 
-            e => Err( unsafe { std::mem::transmute(e) } ),
+            e => Err(unsafe { std::mem::transmute(e) }),
         }
     }
 
@@ -331,18 +322,20 @@ impl VoicevoxCore {
         let mut output_predict_intonation_data_length: usize = 0;
         let mut output_predict_intonation_data: *mut f32 = std::ptr::null_mut();
 
-        let result_code = unsafe {voicevox_predict_intonation(
-            length,
-            vowel_ptr,
-            consonant_ptr,
-            start_accent_ptr,
-            end_accent_ptr,
-            start_accent_phrase_ptr,
-            end_accent_phrase_ptr,
-            speaker_id,
-            &mut output_predict_intonation_data_length,
-            &mut output_predict_intonation_data,
-        )};
+        let result_code = unsafe {
+            voicevox_predict_intonation(
+                length,
+                vowel_ptr,
+                consonant_ptr,
+                start_accent_ptr,
+                end_accent_ptr,
+                start_accent_phrase_ptr,
+                end_accent_phrase_ptr,
+                speaker_id,
+                &mut output_predict_intonation_data_length,
+                &mut output_predict_intonation_data,
+            )
+        };
 
         match result_code {
             0 => {
@@ -353,7 +346,7 @@ impl VoicevoxCore {
                 );
                 Ok(ptr_wrap)
             }
-            e => Err( unsafe { std::mem::transmute(e) } ),
+            e => Err(unsafe { std::mem::transmute(e) }),
         }
     }
 
@@ -369,10 +362,12 @@ impl VoicevoxCore {
     /// - If successful, returns a Result wrapped around a CPointerWrap object that holds the synthesized audio waveform data.
     /// - If unsuccessful, returns a Result wrapped around a ResultCode.
     ///
-    pub fn decode(&self,
-                         phoneme_vectors: &[f32],
-                         f0: &[f32],
-                         speaker_id: u32) -> Result<CPointerWrap<f32>, ResultCode> {
+    pub fn decode(
+        &self,
+        phoneme_vectors: &[f32],
+        f0: &[f32],
+        speaker_id: u32,
+    ) -> Result<CPointerWrap<f32>, ResultCode> {
         let phoneme_size = phoneme_vectors.len();
         let phoneme_ptr = phoneme_vectors.as_ptr() as *mut f32;
         let f0_size = f0.len();
@@ -381,27 +376,27 @@ impl VoicevoxCore {
         let mut data_length: usize = 0;
         let mut data_ptr: *mut f32 = std::ptr::null_mut();
 
-        let result_code = unsafe {voicevox_decode(
-            phoneme_size,
-            f0_size,
-            phoneme_ptr,
-            f0_ptr,
-            speaker_id,
-            &mut data_length,
-            &mut data_ptr,
-        )};
+        let result_code = unsafe {
+            voicevox_decode(
+                phoneme_size,
+                f0_size,
+                phoneme_ptr,
+                f0_ptr,
+                speaker_id,
+                &mut data_length,
+                &mut data_ptr,
+            )
+        };
 
         match result_code {
             0 => {
-                let ptr_wrap = CPointerWrap::new(
-                    data_ptr,
-                    data_length,
-                    |p| unsafe {voicevox_decode_data_free(p)},
-                );
+                let ptr_wrap = CPointerWrap::new(data_ptr, data_length, |p| unsafe {
+                    voicevox_decode_data_free(p)
+                });
                 Ok(ptr_wrap)
             }
 
-            e => Err( unsafe { std::mem::transmute(e) } ),
+            e => Err(unsafe { std::mem::transmute(e) }),
         }
     }
 
@@ -417,7 +412,11 @@ impl VoicevoxCore {
     ///
     /// * `CPointerWrap<u8>` containing the synthesized audio in WAV format if synthesis succeeds.
     /// * An error code otherwise.
-    pub fn voicevox_synthesize(audio_query: &str, speaker_id: u32, options: SynthesisOptions) -> Result<CPointerWrap<u8>, ResultCode> {
+    pub fn voicevox_synthesize(
+        audio_query: &str,
+        speaker_id: u32,
+        options: SynthesisOptions,
+    ) -> Result<CPointerWrap<u8>, ResultCode> {
         let audio_query_c_str = std::ffi::CString::new(audio_query).unwrap();
         let mut output_wav_ptr: *mut u8 = std::ptr::null_mut();
         let mut output_wav_length: usize = 0;
@@ -434,10 +433,12 @@ impl VoicevoxCore {
 
         match result_code {
             0 => {
-                let wav = CPointerWrap::<u8>::new(output_wav_ptr, output_wav_length, |p| unsafe{ voicevox_wav_free(p) } );
+                let wav = CPointerWrap::<u8>::new(output_wav_ptr, output_wav_length, |p| unsafe {
+                    voicevox_wav_free(p)
+                });
                 Ok(wav)
             }
-            e => Err( unsafe { std::mem::transmute(e) } ),
+            e => Err(unsafe { std::mem::transmute(e) }),
         }
     }
 
@@ -454,24 +455,23 @@ impl VoicevoxCore {
     /// * audio query formatted in json format if the synthesis succeeds.
     /// * An error code otherwise.
     ///
-    pub fn audio_query(text: &str, speaker_id: u32, options: AudioQueryOptions) -> Result<CStrWrap, ResultCode> {
+    pub fn audio_query(
+        text: &str,
+        speaker_id: u32,
+        options: AudioQueryOptions,
+    ) -> Result<CStrWrap, ResultCode> {
         let c_str = std::ffi::CString::new(text).unwrap();
         let mut output_ptr: *mut std::os::raw::c_char = std::ptr::null_mut();
-        let result_code = unsafe {voicevox_audio_query(c_str.as_ptr(),
-                                               speaker_id,
-                                               options,
-                                               &mut output_ptr,
-                                               )};
+        let result_code =
+            unsafe { voicevox_audio_query(c_str.as_ptr(), speaker_id, options, &mut output_ptr) };
         match result_code {
             0 => {
-                let ptr_wrap = CStrWrap::new(
-                    output_ptr,
-                    |p| unsafe {voicevox_audio_query_json_free(p)},
-                );
+                let ptr_wrap =
+                    CStrWrap::new(output_ptr, |p| unsafe { voicevox_audio_query_json_free(p) });
                 Ok(ptr_wrap)
             }
 
-            e => Err( unsafe { std::mem::transmute(e) } ),
+            e => Err(unsafe { std::mem::transmute(e) }),
         }
     }
 
@@ -487,9 +487,7 @@ impl VoicevoxCore {
     ///
     /// * [CPointerWrap] if the synthesis succeeds.
     /// * An error code otherwise.
-    pub fn tts_simple(&self,
-                text: &str,
-                speaker_id: u32) -> Result<CPointerWrap<u8>, ResultCode> {
+    pub fn tts_simple(&self, text: &str, speaker_id: u32) -> Result<CPointerWrap<u8>, ResultCode> {
         Self::_tts(text, speaker_id, Self::make_default_tts_options())
     }
 
@@ -505,36 +503,43 @@ impl VoicevoxCore {
     ///
     /// * [CPointerWrap] if the synthesis succeeds.
     /// * An error code otherwise.
-    pub fn tts(&self,
-                text: &str,
-                speaker_id: u32,
-                options: TtsOptions) -> Result<CPointerWrap<u8>, ResultCode> {
+    pub fn tts(
+        &self,
+        text: &str,
+        speaker_id: u32,
+        options: TtsOptions,
+    ) -> Result<CPointerWrap<u8>, ResultCode> {
         Self::_tts(text, speaker_id, options)
     }
 
-    fn _tts(text: &str,
-            speaker_id: u32,
-            options: TtsOptions) -> Result<CPointerWrap<u8>, ResultCode> {
+    fn _tts(
+        text: &str,
+        speaker_id: u32,
+        options: TtsOptions,
+    ) -> Result<CPointerWrap<u8>, ResultCode> {
         let c_str = std::ffi::CString::new(text).unwrap();
         let mut out_length: usize = 0;
         let mut out_wav: *mut u8 = std::ptr::null_mut();
 
         let result = unsafe {
-            voicevox_tts(c_str.as_ptr(),
-                        speaker_id,
-                        options,
-                        &mut out_length,
-                        &mut out_wav
-                        )
+            voicevox_tts(
+                c_str.as_ptr(),
+                speaker_id,
+                options,
+                &mut out_length,
+                &mut out_wav,
+            )
         };
 
         match result {
             0 => {
-                let wav = CPointerWrap::<u8>::new(out_wav, out_length, |p| unsafe{ voicevox_wav_free(p) } );
+                let wav = CPointerWrap::<u8>::new(out_wav, out_length, |p| unsafe {
+                    voicevox_wav_free(p)
+                });
                 Ok(wav)
             }
 
-            e => Err( unsafe { std::mem::transmute(e) } ),
+            e => Err(unsafe { std::mem::transmute(e) }),
         }
     }
 
@@ -550,6 +555,4 @@ impl VoicevoxCore {
             CStr::from_ptr(message).to_str().unwrap()
         }
     }
-
 }
-

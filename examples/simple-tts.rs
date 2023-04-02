@@ -1,14 +1,12 @@
-use voicevox_core_rs::api::*;
 use std::io::Write;
+use voicevox_core_rs::api::*;
 
 fn main() -> std::io::Result<()> {
     println!("VOICEVOX CORE version: {}", VoicevoxCore::get_version());
 
     let dir = std::ffi::CString::new("open_jtalk_dic_utf_8-1.11").unwrap();
-    let vvc = match VoicevoxCore::new_from_options(AccelerationMode::Auto,
-                                                        0,
-                                                        true,
-                                                        dir.as_c_str()) {
+    let vvc = match VoicevoxCore::new_from_options(AccelerationMode::Auto, 0, true, dir.as_c_str())
+    {
         Ok(vvc) => vvc,
         Err(e) => panic!("failed to initialize voicevox {:?}", e),
     };
