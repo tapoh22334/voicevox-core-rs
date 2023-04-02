@@ -71,8 +71,8 @@ The predicted data is returned as a dynamically allocated array of <code>f32</co
 </ul>
 <h5 id="returns-8"><a href="#returns-8">Returns</a></h5>
 <ul>
-<li><code>Vec&lt;u8&gt;</code> containing the synthesized audio in WAV format if synthesis succeeds.</li>
-<li><code>ResultCode</code> otherwise.</li>
+<li><code>CPointerWrap&lt;u8&gt;</code> containing the synthesized audio in WAV format if synthesis succeeds.</li>
+<li>An error code otherwise.</li>
 </ul>
 </div></details><details class="toggle method-toggle" open><summary><section id="method.audio_query" class="method has-srclink"><a class="srclink rightside" href="../../src/voicevox_core_rs/api.rs.html#457-476">source</a><h4 class="code-header">pub fn <a href="#method.audio_query" class="fn">audio_query</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;text: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.68.2/std/primitive.str.html">str</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;speaker_id: <a class="primitive" href="https://doc.rust-lang.org/1.68.2/std/primitive.u32.html">u32</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="type" href="type.AudioQueryOptions.html" title="type voicevox_core_rs::api::AudioQueryOptions">AudioQueryOptions</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/1.68.2/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="struct.CStrWrap.html" title="struct voicevox_core_rs::api::CStrWrap">CStrWrap</a>, <a class="enum" href="enum.ResultCode.html" title="enum voicevox_core_rs::api::ResultCode">ResultCode</a>&gt;</h4></section></summary><div class="docblock"><p>Sends a text query to Voicevox API to retrieve audio query information.</p>
 <h5 id="arguments-6"><a href="#arguments-6">Arguments</a></h5>
