@@ -1,6 +1,6 @@
 ## VOICEVOX CORE Rust Bindings
 
-This is a Rust FFI wrapper for VOICEVOX CORE.
+This is an unofficial Rust FFI wrapper for VOICEVOX CORE.
 It provides a high-level API for calling VOICEVOX CORE.
 It also provides a low-level API for directly calling the ffi provided by VOICEVOX CORE.
 
