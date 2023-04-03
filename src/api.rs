@@ -110,6 +110,11 @@ pub enum AccelerationMode {
 ///
 /// Provides functionality of Voicevox Core.
 ///
+/// # Safety
+/// VoicevoxCore is not thread-safe, and should not be accessed by multiple threads simultaneously.
+/// VoicevoxCore is designed to be used as a singleton instance in a process.
+/// Multiple instances of VoicevoxCore should not be created within the same process.
+///
 pub struct VoicevoxCore;
 
 impl VoicevoxCore {
@@ -412,6 +417,7 @@ impl VoicevoxCore {
     /// * `CPointerWrap<u8>` containing the synthesized audio in WAV format if synthesis succeeds.
     /// * An error code otherwise.
     pub fn synthesize(
+        &self,
         audio_query: &str,
         speaker_id: u32,
         options: SynthesisOptions,
@@ -455,6 +461,7 @@ impl VoicevoxCore {
     /// * An error code otherwise.
     ///
     pub fn audio_query(
+        &self,
         text: &str,
         speaker_id: u32,
         options: AudioQueryOptions,

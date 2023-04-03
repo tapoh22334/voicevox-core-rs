@@ -1,6 +1,9 @@
 ## VOICEVOX CORE Rust Bindings
 
 VOICEVOX COREのRust向けFFIラッパーです。
+VOICEVOX COREを呼び出すための高レベルなAPIを提供します。
+また、VOICEVOX COREにより提供されるffiを直接呼び出す低レベルなAPIを提供します。
+
 
 ## サンプルの実行方法
 
@@ -28,6 +31,11 @@ mv target/debug/examples/simple-tts voicevox_core
 (export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH && cd voicevox_core && ./simple-tts)
 ```
 
+### テスト
+
+```
+(export LD_LIBRARY_PATH=./voicevox_core:$LD_LIBRARY_PATH && cargo test -- --test-threads=1)
+```
 
 ## 対応状況
 
