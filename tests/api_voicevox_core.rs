@@ -23,13 +23,13 @@ fn audio_query() {
 }
 
 #[test]
-fn synthesize() {
+fn synthesis() {
     let vvc = setup();
     let opt = VoicevoxCore::make_default_audio_query_options();
     let audio_query = vvc.audio_query("おはよう", SPEAKER_ID, opt).unwrap();
 
     let opt = VoicevoxCore::make_default_synthesis_options();
-    let wav = vvc.synthesize(audio_query.as_str(), SPEAKER_ID, opt);
+    let wav = vvc.synthesis(audio_query.as_str(), SPEAKER_ID, opt);
 
     assert_eq!(wav.is_ok(), true);
 }

@@ -404,7 +404,7 @@ impl VoicevoxCore {
         }
     }
 
-    /// Synthesizes speech from a Voicevox audio query.
+    /// Synthesis speech from a Voicevox audio query.
     ///
     /// # Arguments
     ///
@@ -416,7 +416,7 @@ impl VoicevoxCore {
     ///
     /// * `CPointerWrap<u8>` containing the synthesized audio in WAV format if synthesis succeeds.
     /// * An error code otherwise.
-    pub fn synthesize(
+    pub fn synthesis(
         &self,
         audio_query: &str,
         speaker_id: u32,
