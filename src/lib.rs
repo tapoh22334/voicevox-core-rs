@@ -1,4 +1,17 @@
-//! FFI Bindings for VOICEVOX CORE
+//! # FFI Bindings for VOICEVOX CORE.
+//!
+//! This is an unofficial Rust FFI wrapper for VOICEVOX CORE.
+//!
+//! # APIs
+//!
+//! It provides a high-level API for calling VOICEVOX CORE.
+//!
+//!  - [VoicevoxCore]
+//!
+//!
+//! It also provides a low-level API for directly calling the ffi provided by VOICEVOX CORE.
+//!
+//!  - [api](api/index.html#functions)
 //!
 //! # Example
 //!
