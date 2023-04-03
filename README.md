@@ -19,7 +19,7 @@ use std::io::Write;
 use vvcore::*;
 
 fn main() {
-    let dir = std::ffi::CString::new("./voicevox_core/open_jtalk_dic_utf_8-1.11").unwrap();
+    let dir = std::ffi::CString::new("open_jtalk_dic_utf_8-1.11").unwrap();
     let vvc = VoicevoxCore::new_from_options(AccelerationMode::Auto, 0, true, dir.as_c_str()).unwrap();
 
     let text: &str = "こんにちは";
@@ -30,6 +30,11 @@ fn main() {
     file.write_all(&wav.as_slice()).unwrap();
 }
 ```
+
+### Build and Execution
+
+Please note that the files inside the downloaded voicevox_core directory are required at runtime,
+so please place the built binary file in the downloaded voicevox_core directory and execute it.
 
 ## Compatibility
 
