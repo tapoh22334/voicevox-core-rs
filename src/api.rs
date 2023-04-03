@@ -383,7 +383,7 @@ impl VoicevoxCore {
         let result_code = unsafe {
             voicevox_decode(
                 phoneme_size,
-                f0_size,
+                f0_size / phoneme_size,
                 phoneme_ptr,
                 f0_ptr,
                 speaker_id,

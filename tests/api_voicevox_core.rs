@@ -35,7 +35,37 @@ fn synthesize() {
 }
 
 #[test]
-fn decode() {}
+fn decode() {
+    let vvc = setup();
+
+    // 「テスト」という文章に対応する入力
+    const F0_LENGTH: usize = 69;
+    let mut f0 = [0.; F0_LENGTH];
+    f0[9..24].fill(5.905218);
+    f0[37..60].fill(5.565851);
+
+    const PHONEME_SIZE: usize = 45;
+    let mut phoneme = [0.; PHONEME_SIZE * F0_LENGTH];
+    let mut set_one = |index, range| {
+        for i in range {
+            phoneme[i * PHONEME_SIZE + index] = 1.;
+        }
+    };
+    set_one(0, 0..9);
+    set_one(37, 9..13);
+    set_one(14, 13..24);
+    set_one(35, 24..30);
+    set_one(6, 30..37);
+    set_one(37, 37..45);
+    set_one(30, 45..60);
+    set_one(0, 60..69);
+
+    let r = vvc.decode(&f0, &phoneme, 0);
+
+    assert!(r.is_ok());
+    assert_eq!(r.unwrap().as_slice().len(), F0_LENGTH * 256);
+
+}
 
 #[test]
 fn is_gpu_mode() {
